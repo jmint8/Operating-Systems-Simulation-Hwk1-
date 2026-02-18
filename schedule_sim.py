@@ -27,7 +27,8 @@ def read_data(filename):
     #for job in jobs:
         #print(job.id, job.arrival, job.timeNeeded)
         # im not sure whty but if this is on the readfile def it doesnt compile and doesnt print. but it does in main idk
-        in_f.close()
+    in_f.close()
+
     return jobs
 
 def reset_sim(jobs):
@@ -35,6 +36,9 @@ def reset_sim(jobs):
         job.timeLeft = job.timeNeeded
 
 def fcfs(jobs):
+    
+
+
 
     print("FCFS")
     return 0
@@ -63,12 +67,17 @@ def main():
     
     reset_sim(jobs)
     fcfs(jobs)
+
     reset_sim(jobs)
     sjf(jobs)
+
     reset_sim(jobs)
     srtf(jobs)
+
     reset_sim(jobs)
     rr(jobs)
+
+
 
 if __name__ == "__main__":    
     main()
