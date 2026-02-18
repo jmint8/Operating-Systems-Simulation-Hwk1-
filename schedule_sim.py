@@ -19,7 +19,7 @@ def read_data(filename):
         id = int(line.split()[0])
         arrival = int(line.split()[1])
         timeNeeded = int(line.split()[2])
-        print(id, arrival, timeNeeded)
+        #print(id, arrival, timeNeeded) # this works tho, the print code found below doesnt tho. 
         jobs.append(job(id, arrival, timeNeeded))
     
         #and now we have a list of jobs that we can use for the rest of the simulation yay
@@ -31,33 +31,55 @@ def read_data(filename):
 
     return jobs
 
-def reset_sim(jobs):
-    for job in jobs:
-        job.timeLeft = job.timeNeeded
 
 def fcfs(jobs):
-    
+    current_time = 0
+    context_switches = 0
+    total_turnaround = 0
+
+    #simulate the first come first serve scheduling algorithm here.
+    #calculate turnaround time
+
+    for job in jobs:
+        if job.arrival > current_time:
+            current_time = job.arrival
+        current_time += job.timeNeeded
+        total_turnaround += current_time - job.arrival
+        context_switches += 1
 
 
 
-    print("FCFS")
-    return 0
+
+    print("FCFS Number of Context Switches:", context_switches)
+    print("FCFS Average Turnaround Time:", total_turnaround / len(jobs))
+    return None
 
 def sjf(jobs):
+    current_time = 0
+    context_switches = 0
+
+
 
     print("SJF")
-    return 0
+    return None
 
 def srtf(jobs):
+    current_time = 0
+    context_switches = 0
+
+
 
     print("SRTF")  
-    return 0
+    return None
 
 def rr(jobs):
+    current_time = 0
+    context_switches = 0
+
+
 
     print("RR")
-    return 0
-
+    return None
 
 def main():
     jobs = read_data("data.txt")
@@ -65,19 +87,13 @@ def main():
     # for job in jobs:
     #     print(job.id, job.arrival, job.timeNeeded)
     
-    reset_sim(jobs)
     fcfs(jobs)
 
-    reset_sim(jobs)
     sjf(jobs)
 
-    reset_sim(jobs)
     srtf(jobs)
 
-    reset_sim(jobs)
     rr(jobs)
-
-
 
 if __name__ == "__main__":    
     main()
