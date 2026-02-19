@@ -1,15 +1,13 @@
 ## OS Simulation Homework 1
-import sys
 
 # has to take something as input (jobs)
-
 class job:
     def __init__(self, id, arrival, timeNeeded):
         self.id = int(id)
         self.arrival = int(arrival)
         self.timeNeeded = int(timeNeeded)
-        self.timeLeft = int(self.timeNeeded) 
-        # timeLeft only really needed for srtf and rr
+        self.timeLeft = int(self.timeNeeded)  # timeLeft only really needed for srtf and rr
+        # this is going to make these simulations so much easier to do
 
 def read_data(filename): 
     jobs = []
@@ -57,12 +55,12 @@ def sjf(jobs):
     total_turnaround = 0
     available_jobs = []
     completed_jobs = []
-    jobs_not_arrived = jobs.copy() # will help keep track of jobs not arrived. 
+    jobs_not_arrived = jobs.copy() # will help keep track of jobs not arrived without having to change the og jobs list. 
     while len(completed_jobs) < len(jobs):
         for job in jobs_not_arrived:
             if job.arrival <= current_time and job not in available_jobs and job not in completed_jobs:
                 available_jobs.append(job) 
-                jobs_not_arrived.remove(job) # this will prevent the for loop from looping the whole list every time. lower time complexity.
+                jobs_not_arrived.remove(job) # this will prevent the for loop from looping the whole list everty time. lower time complexity.
                 #print(job.id, job.arrival, job.timeNeeded) #testing thingy
 
         if len(available_jobs) > 0:
@@ -75,7 +73,7 @@ def sjf(jobs):
             completed_jobs.append(curr_job)
             curr_job = None # its like setting our pointers to null. 
 
-        elif (len(available_jobs)) == 0:
+        elif (len(available_jobs)) ==0:
             current_time += 1 # if there are no available jobs, just move to the next time unit
 
     print("SJF Number of Context Switches:", context_switches)
@@ -83,17 +81,19 @@ def sjf(jobs):
     print("\n")
     return None
 
-def srtf(jobs):
+def srtn(jobs):
     current_time = 0
     context_switches = 0
     total_turnaround = 0
-    #shortest remaining time first
+    #shortest remaining time next
 
 
 
 
-    print("SRTF Number of Context Switches:", context_switches)
-    print("SRTF Average Turnaround Time:", total_turnaround / len(jobs))
+
+
+    print("SRTN Number of Context Switches:", context_switches)
+    print("SRTN Average Turnaround Time:", total_turnaround / len(jobs))
     print("\n")
     return None
 
@@ -120,7 +120,7 @@ def main():
 
     #sjf(jobs) #| works |
 
-    srtf(jobs) #| TODO |
+    srtn(jobs) #| TODO |
 
     #rr(jobs) #| TODO |
 
