@@ -96,24 +96,25 @@ def srtn(jobs):
         for job in jobs_not_arrived:
             if job.arrival <= current_time and job not in available_jobs and job not in completed_jobs:
                 available_jobs.append(job) 
+                context_switches += 1 # every time a job is added to the available jobs list, we have a context switch.
                 jobs_not_arrived.remove(job) # same general algo as last one 
 
-            if len(available_jobs) ==0:
-                current_time += 1 # if there are no available jobs, just move to the next time unit
+        if len(available_jobs) == 0:
+            current_time += 1 # if there are no available jobs, just move to the next time unit
 
-            elif len(available_jobs) > 0:
-                available_jobs.sort(key=lambda x : x.timeLeft) # sort by time left
-                curr_job = available_jobs[0] #time left
-                curr_job.timeLeft -= 1 # decrease time left by 1 unit of time
-                current_time += 1 # move to the next time unit
-                print (curr_job.id, curr_job.arrival, curr_job.timeNeeded, curr_job.timeLeft) # testing thingy
-                if curr_job.timeLeft ==0:
-                    total_turnaround += current_time - curr_job.arrival
-                    context_switches += 1
-                    completed_jobs.append(curr_job)
-                    available_jobs.remove(curr_job) # remove the job from the available jobs list since its completed. 
-                    curr_job = None # set our pointer to null.
-                
+        elif len(available_jobs) > 0:
+            available_jobs.sort(key=lambda x : x.timeLeft) # sort by time left
+            curr_job = available_jobs[0] #time left
+            curr_job.timeLeft -= 1 # decrease time left by 1 unit of time
+            current_time += 1 # move to the next time unit
+            print (curr_job.id, curr_job.arrival, curr_job.timeNeeded, curr_job.timeLeft) # testing thingy
+            if curr_job.timeLeft ==0:
+                total_turnaround += current_time - curr_job.arrival
+                context_switches += 1
+                completed_jobs.append(curr_job)
+                available_jobs.remove(curr_job) # remove the job from the available jobs list since its completed. 
+                curr_job = None # set our pointer to null.
+    context_switches -=1
     print("SRTN Number of Context Switches:", context_switches)
     print("SRTN Average Turnaround Time:", total_turnaround / len(jobs))
     print("\n")
@@ -149,9 +150,9 @@ def main():
 
     #sjf(jobs) #| works |
 
-    srtn(jobs) #| TODO |
+    #srtn(jobs) #| works |
 
-    #rr(jobs) #| TODO |
+    rr(jobs) #| TODO |
 
 if __name__ == "__main__":    
     main()
