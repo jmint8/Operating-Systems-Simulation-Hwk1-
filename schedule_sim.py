@@ -85,7 +85,23 @@ def srtn(jobs):
     current_time = 0
     context_switches = 0
     total_turnaround = 0
+    completed_jobs = []
+    available_jobs = []
+    jobs_not_arrived = jobs.copy() # might use this again, just gonna keep it here for now 
+    for job in jobs:
+        job.timeLeft = job.timeNeeded # reset time left for all jobs for multiple test runs 
     #shortest remaining time next
+
+    while len(completed_jobs) < len(jobs):
+        for job in jobs_not_arrived:
+            if job.arrival <= current_time and job not in available_jobs and job not in completed_jobs:
+                available_jobs.append(job) 
+                jobs_not_arrived.remove(job) # same general algo as last one 
+
+            if len(available_jobs) ==0:
+                current_time += 1 # if there are no available jobs, just move to the next time unit
+            if len(available_jobs) > 0:
+                return 0
 
 
 
@@ -101,7 +117,14 @@ def rr(jobs):
     current_time = 0
     context_switches = 0
     total_turnaround = 0
+    completed_jobs = []
+    available_jobs = []
+    jobs_not_arrived = jobs.copy() # also might use this again. 
+    for job in jobs:
+        job.timeLeft = job.timeNeeded # reset time left for all jobs for multiple test runs
     #round robin 
+
+
 
 
     print("RR Number of Context Switches:", context_switches)
