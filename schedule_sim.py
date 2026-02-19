@@ -114,7 +114,9 @@ def srtn(jobs):
                 completed_jobs.append(curr_job)
                 available_jobs.remove(curr_job) # remove the job from the available jobs list since its completed. 
                 curr_job = None # set our pointer to null.
+        #print(current_time)
     context_switches -=1
+
     print("SRTN Number of Context Switches:", context_switches)
     print("SRTN Average Turnaround Time:", total_turnaround / len(jobs))
     print("\n")
@@ -131,9 +133,34 @@ def rr(jobs):
         job.timeLeft = job.timeNeeded # reset time left for all jobs for multiple test runs
     #round robin 
 
+    # basically same code as srtn here 
+    while len(completed_jobs) < len(jobs):
+        for job in jobs_not_arrived:
+            if job.arrival <= current_time and job not in available_jobs and job not in completed_jobs:
+                available_jobs.append(job) 
+                # a new job dosent add to the context switches this time so i gues that is different 
+                jobs_not_arrived.remove(job) # same general algo as last one 
 
+        if len(available_jobs) == 0:
+            current_time += 1 # if there are no available jobs, just move to the next time unit
 
+        # now here is the RR code 
+        elif len(available_jobs) > 0:
+            curr_job = available_jobs.pop(0) # we have to pop the job again becasuse we will have to append it back later if its not completed 
+            if curr_job.timeLeft > 0:
+                curr_job.timeLeft -= 1
+                current_time += 1
+                print (curr_job.id, curr_job.arrival, curr_job.timeNeeded, curr_job.timeLeft) # testing thingy
+                if curr_job.timeLeft == 0:
+                    total_turnaround += current_time - curr_job.arrival
+                    context_switches += 1
+                    completed_jobs.append(curr_job)
+                    curr_job = None # idk if this is actually necessary but im going to do it anyway 
+                else:
+                    available_jobs.append(curr_job) # if job is not complete we haveto add it back to available job list 
+                    context_switches += 1 # every time a job is added again context switch
 
+    context_switches -= 1
     print("RR Number of Context Switches:", context_switches)
     print("RR Average Turnaround Time:", total_turnaround / len(jobs))
     print("\n")
