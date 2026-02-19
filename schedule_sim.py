@@ -168,7 +168,7 @@ def rr(jobs):
 
 def main():
     #jobs = read_data("data.txt")
-    jobs = read_data("data2.txt") # for testing purposes. 
+    jobs = read_data("data.txt") # for testing purposes. 
 
     # for job in jobs:
     #  print(job.id, job.arrival, job.timeNeeded)
@@ -177,7 +177,7 @@ def main():
 
     #sjf(jobs) #| works |
 
-    #srtn(jobs) #| works |
+    srtn(jobs) #| works |
 
     rr(jobs) #| TODO |
 
