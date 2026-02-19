@@ -170,12 +170,10 @@ def main():
     #jobs = read_data("data.txt")
     jobs = read_data("data.txt") # for testing purposes. 
 
-    # for job in jobs:
-    #  print(job.id, job.arrival, job.timeNeeded)
     
-    #fcfs(jobs) #| works |
+    fcfs(jobs) #| works |
 
-    #sjf(jobs) #| works |
+    sjf(jobs) #| works |
 
     srtn(jobs) #| works |
 
