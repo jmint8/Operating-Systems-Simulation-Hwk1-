@@ -100,13 +100,19 @@ def srtn(jobs):
 
             if len(available_jobs) ==0:
                 current_time += 1 # if there are no available jobs, just move to the next time unit
-            if len(available_jobs) > 0:
-                return 0
 
-
-
-
-
+            elif len(available_jobs) > 0:
+                available_jobs.sort(key=lambda x : x.timeLeft) # sort by time left
+                curr_job = available_jobs[0] #time left
+                curr_job.timeLeft -= 1 # decrease time left by 1 unit of time
+                current_time += 1 # move to the next time unit
+                if curr_job.timeLeft ==0:
+                    total_turnaround += current_time - curr_job.arrival
+                    context_switches += 1
+                    completed_jobs.append(curr_job)
+                    available_jobs.remove(curr_job) # remove the job from the available jobs list since its completed. 
+                    curr_job = None # set our pointer to null.
+                
 
     print("SRTN Number of Context Switches:", context_switches)
     print("SRTN Average Turnaround Time:", total_turnaround / len(jobs))
