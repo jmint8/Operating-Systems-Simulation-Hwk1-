@@ -48,6 +48,7 @@ def fcfs(jobs):
         
     print("FCFS Number of Context Switches:", context_switches)
     print("FCFS Average Turnaround Time:", total_turnaround / len(jobs))
+    print("\n")
     return None
 
 def sjf(jobs):
@@ -59,6 +60,7 @@ def sjf(jobs):
 
 
     print("SJF")
+    print("\n")
     return None
 
 def srtf(jobs):
@@ -69,6 +71,7 @@ def srtf(jobs):
 
 
     print("SRTF")
+    print("\n")
     return None
 
 def rr(jobs):
@@ -79,6 +82,7 @@ def rr(jobs):
 
 
     print("RR")
+    print("\n")
     return None
 
 def main():
