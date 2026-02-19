@@ -21,7 +21,6 @@ def read_data(filename):
         timeNeeded = int(line.split()[2])
         #print(id, arrival, timeNeeded) # this works tho, the print code found below doesnt tho. 
         jobs.append(job(id, arrival, timeNeeded))
-    
         #and now we have a list of jobs that we can use for the rest of the simulation yay
 
     #for job in jobs:
@@ -32,34 +31,55 @@ def read_data(filename):
     return jobs
 
 def fcfs(jobs):
+    #intialize current time, context switches, and total turnaround time
     current_time = 0
     context_switches = 0
     total_turnaround = 0
-
-    #simulate the first come first serve scheduling algorithm here.
-    #calculate turnaround time
  
+    #jobs is already sorted for first come first serve. 
     for job in jobs:
         if job.arrival > current_time:
+            #edge case where the next job arrives after the current time
             current_time = job.arrival    
         current_time += job.timeNeeded
         total_turnaround += current_time - job.arrival
         context_switches += 1
-        
+
     print("FCFS Number of Context Switches:", context_switches)
     print("FCFS Average Turnaround Time:", total_turnaround / len(jobs))
     print("\n")
     return None
 
 def sjf(jobs):
+    #shortest job first.
     current_time = 0
     context_switches = 0
     total_turnaround = 0
-    #have a list of jobs that have arrived but not yet completed, and sort it by time needed.
+    available_jobs = []
+    completed_jobs = []
+    jobs_not_arrived = jobs.copy() # will help keep track of jobs not arrived. 
+    while len(completed_jobs) < len(jobs):
+        for job in jobs_not_arrived:
+            if job.arrival <= current_time and job not in available_jobs and job not in completed_jobs:
+                available_jobs.append(job) 
+                jobs_not_arrived.remove(job) # this will prevent the for loop from looping the whole list every time. lower time complexity.
+                #print(job.id, job.arrival, job.timeNeeded) #testing thingy
 
+        if len(available_jobs) > 0:
+            available_jobs.sort(key=lambda x: x.timeNeeded) # sort by time needed
+            curr_job = available_jobs.pop(0) # get the job with the shortest time needed bc we sort it every time. 
+            current_time += curr_job.timeNeeded   
+            total_turnaround +=current_time-curr_job.arrival 
+            context_switches += 1 
+            print(curr_job.id, curr_job.arrival, curr_job.timeNeeded) # testing thingy
+            completed_jobs.append(curr_job)
+            curr_job = None # its like setting our pointers to null. 
 
+        elif (len(available_jobs)) == 0:
+            current_time += 1 # if there are no available jobs, just move to the next time unit
 
-    print("SJF")
+    print("SJF Number of Context Switches:", context_switches)
+    print("SJF Average Turnaround Time:", total_turnaround / len(jobs))
     print("\n")
     return None
 
@@ -69,8 +89,11 @@ def srtf(jobs):
     total_turnaround = 0
     #shortest remaining time first
 
+    
 
-    print("SRTF")
+
+    print("SRTF Number of Context Switches:", context_switches)
+    print("SRTF Average Turnaround Time:", total_turnaround / len(jobs))
     print("\n")
     return None
 
@@ -81,23 +104,25 @@ def rr(jobs):
     #round robin 
 
 
-    print("RR")
+    print("RR Number of Context Switches:", context_switches)
+    print("RR Average Turnaround Time:", total_turnaround / len(jobs))
     print("\n")
     return None
 
 def main():
-    jobs = read_data("data.txt")
+    #jobs = read_data("data.txt")
+    jobs = read_data("data2.txt") # for testing purposes. 
 
     # for job in jobs:
-    #     print(job.id, job.arrival, job.timeNeeded)
+    #  print(job.id, job.arrival, job.timeNeeded)
     
-    fcfs(jobs)
+    #fcfs(jobs) #| works |
 
-    sjf(jobs)
+    #sjf(jobs) #| works |
 
-    srtf(jobs)
+    srtf(jobs) #| TODO |
 
-    rr(jobs)
+    #rr(jobs) #| TODO |
 
 if __name__ == "__main__":    
     main()
