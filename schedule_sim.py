@@ -71,7 +71,7 @@ def sjf(jobs):
             current_time += curr_job.timeNeeded   
             total_turnaround +=current_time-curr_job.arrival 
             context_switches += 1 
-            print(curr_job.id, curr_job.arrival, curr_job.timeNeeded) # testing thingy
+            #print(curr_job.id, curr_job.arrival, curr_job.timeNeeded) # testing thingy
             completed_jobs.append(curr_job)
             curr_job = None # its like setting our pointers to null. 
 
@@ -89,7 +89,7 @@ def srtf(jobs):
     total_turnaround = 0
     #shortest remaining time first
 
-    
+
 
 
     print("SRTF Number of Context Switches:", context_switches)
