@@ -31,7 +31,6 @@ def read_data(filename):
 
     return jobs
 
-
 def fcfs(jobs):
     current_time = 0
     context_switches = 0
@@ -39,17 +38,14 @@ def fcfs(jobs):
 
     #simulate the first come first serve scheduling algorithm here.
     #calculate turnaround time
-
+ 
     for job in jobs:
         if job.arrival > current_time:
-            current_time = job.arrival
+            current_time = job.arrival    
         current_time += job.timeNeeded
         total_turnaround += current_time - job.arrival
         context_switches += 1
-
-
-
-
+        
     print("FCFS Number of Context Switches:", context_switches)
     print("FCFS Average Turnaround Time:", total_turnaround / len(jobs))
     return None
@@ -57,6 +53,8 @@ def fcfs(jobs):
 def sjf(jobs):
     current_time = 0
     context_switches = 0
+    total_turnaround = 0
+    #have a list of jobs that have arrived but not yet completed, and sort it by time needed.
 
 
 
@@ -66,16 +64,18 @@ def sjf(jobs):
 def srtf(jobs):
     current_time = 0
     context_switches = 0
+    total_turnaround = 0
+    #shortest remaining time first
 
 
-
-    print("SRTF")  
+    print("SRTF")
     return None
 
 def rr(jobs):
     current_time = 0
     context_switches = 0
-
+    total_turnaround = 0
+    #round robin 
 
 
     print("RR")
